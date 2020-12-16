@@ -4,16 +4,16 @@ import widowx_env
 from stable_baselines3.common.env_checker import check_env
 
 
-env = gym.make('widowx_reacher-v1')
+env = gym.make('widowx_reacher-v12')
 print("any warnings?", check_env(env))
 
 # Comment this for goal environments
-print("Action space: ", env.action_space)
-print(env.action_space.high)
-print(env.action_space.low)
-print("Observation space: ", env.observation_space)
-print(env.observation_space.high)
-print(env.observation_space.low)
+# print("Action space: ", env.action_space)
+# print(env.action_space.high)
+# print(env.action_space.low)
+# print("Observation space: ", env.observation_space)
+# print(env.observation_space.high)
+# print(env.observation_space.low)
 
 
 # env.render()
