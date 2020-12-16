@@ -308,8 +308,8 @@ def main():  # noqa: C901
         # Real time plot
         if args.plot_dim == 2:
 
-            goal = infos[0]['goal_position']
-            tip = infos[0]['tip_position']
+            goal = infos[0]['goal_pos']
+            tip = infos[0]['endeffector_pos']
 
             ax1.cla()
             ax1.plot(goal[0], goal[2], marker='o', color='g',
@@ -413,14 +413,14 @@ def main():  # noqa: C901
                 0, 1.2), ncol=3, fancybox=True, shadow=True)
 
             fig.suptitle("timestep " + str(ep_len) + " | distance to target: " +
-                         str(round(infos[0]['new_distance'] * 1000, 1)) + " mm")
+                         str(round(infos[0]['distance'] * 1000, 1)) + " mm")
             plt.pause(0.01)
             # plt.show()
 
         elif args.plot_dim == 3:
 
-            goal = infos[0]['goal_position']
-            tip = infos[0]['tip_position']
+            goal = infos[0]['goal_pos']
+            tip = infos[0]['endeffector_pos']
 
             ax.cla()
             ax.plot([goal[0]], [goal[1]], zs=[goal[2]], marker='o',
@@ -435,7 +435,7 @@ def main():  # noqa: C901
             ax.set_zlabel("z (m)", fontsize=15)
 
             fig.suptitle("timestep " + str(ep_len) + " | distance to target: " +
-                         str(round(infos[0]['new_distance'] * 1000, 1)) + " mm")
+                         str(round(infos[0]['distance'] * 1000, 1)) + " mm")
             plt.pause(0.01)
             # plt.show()
 
@@ -449,36 +449,24 @@ def main():  # noqa: C901
             log_dict['action_4'] = action[0][3]
             log_dict['action_5'] = action[0][4]
             log_dict['action_6'] = action[0][5]
-            log_dict['old_joint_pos_1'] = infos[0]['old_joint_pos'][0]
-            log_dict['old_joint_pos_2'] = infos[0]['old_joint_pos'][1]
-            log_dict['old_joint_pos_3'] = infos[0]['old_joint_pos'][2]
-            log_dict['old_joint_pos_4'] = infos[0]['old_joint_pos'][3]
-            log_dict['old_joint_pos_5'] = infos[0]['old_joint_pos'][4]
-            log_dict['old_joint_pos_6'] = infos[0]['old_joint_pos'][5]
-            log_dict['new_joint_pos_1'] = infos[0]['new_joint_pos'][0]
-            log_dict['new_joint_pos_2'] = infos[0]['new_joint_pos'][1]
-            log_dict['new_joint_pos_3'] = infos[0]['new_joint_pos'][2]
-            log_dict['new_joint_pos_4'] = infos[0]['new_joint_pos'][3]
-            log_dict['new_joint_pos_5'] = infos[0]['new_joint_pos'][4]
-            log_dict['new_joint_pos_6'] = infos[0]['new_joint_pos'][5]
-            log_dict['joint_vel_1'] = infos[0]['joint_vel'][0]
-            log_dict['joint_vel_2'] = infos[0]['joint_vel'][1]
-            log_dict['joint_vel_3'] = infos[0]['joint_vel'][2]
-            log_dict['joint_vel_4'] = infos[0]['joint_vel'][3]
-            log_dict['joint_vel_5'] = infos[0]['joint_vel'][4]
-            log_dict['joint_vel_6'] = infos[0]['joint_vel'][5]
+            log_dict['joint_pos1'] = infos[0]['joint_pos'][0]
+            log_dict['joint_pos2'] = infos[0]['joint_pos'][1]
+            log_dict['joint_pos3'] = infos[0]['joint_pos'][2]
+            log_dict['joint_pos4'] = infos[0]['joint_pos'][3]
+            log_dict['joint_pos5'] = infos[0]['joint_pos'][4]
+            log_dict['joint_pos6'] = infos[0]['joint_pos'][5]
             log_dict['joint1_min'] = -3.1
             log_dict['joint1_max'] = 3.1
-            log_dict['joint2_min'] = -1.571
-            log_dict['joint2_max'] = 1.571
-            log_dict['joint3_min'] = -1.571
-            log_dict['joint3_max'] = 1.571
-            log_dict['joint4_min'] = -1.745
-            log_dict['joint4_max'] = 1.745
-            log_dict['joint5_min'] = -2.617
-            log_dict['joint5_max'] = 2.617
-            log_dict['joint6_min'] = 0.003
-            log_dict['joint6_max'] = 0.03
+            log_dict['joint2_min'] = -1.6
+            log_dict['joint2_max'] = 1.6
+            log_dict['joint3_min'] = -1.6
+            log_dict['joint3_max'] = 1.6
+            log_dict['joint4_min'] = -1.8
+            log_dict['joint4_max'] = 1.8
+            log_dict['joint5_min'] = -3.1
+            log_dict['joint5_max'] = 3.1
+            log_dict['joint6_min'] = 0.0
+            log_dict['joint6_max'] = 0.0
             log_dict['action_low1'] = env.action_space.low[0]
             log_dict['action_low2'] = env.action_space.low[1]
             log_dict['action_low3'] = env.action_space.low[2]
@@ -493,14 +481,13 @@ def main():  # noqa: C901
             log_dict['action_high6'] = env.action_space.high[5]
             log_dict['reward'] = reward[0]
             log_dict['return'] = episode_reward
-            log_dict['new_distance'] = infos[0]['new_distance']
-            log_dict['old_distance'] = infos[0]['old_distance']
-            log_dict['target_x'] = infos[0]['goal_position'][0]
-            log_dict['target_y'] = infos[0]['goal_position'][1]
-            log_dict['target_z'] = infos[0]['goal_position'][2]
-            log_dict['tip_y'] = infos[0]['tip_position'][1]
-            log_dict['tip_x'] = infos[0]['tip_position'][0]
-            log_dict['tip_z'] = infos[0]['tip_position'][2]
+            log_dict['distance'] = infos[0]['distance']
+            log_dict['goal_x'] = infos[0]['goal_pos'][0]
+            log_dict['goal_y'] = infos[0]['goal_pos'][1]
+            log_dict['goal_z'] = infos[0]['goal_pos'][2]
+            log_dict['tip_y'] = infos[0]['endeffector_pos'][1]
+            log_dict['tip_x'] = infos[0]['endeffector_pos'][0]
+            log_dict['tip_z'] = infos[0]['endeffector_pos'][2]
             log_dict['done'] = done[0]
             # log_dict['obs'] = obs
             # log_dict['obs_space_low'] = env.observation_space.low
@@ -552,7 +539,7 @@ def main():  # noqa: C901
 
                     # add estimated tip velocity and acceleration (according to
                     # the documentation, 1 timestep = 240 Hz)
-                    log_df['est_vel'] = log_df['new_distance'].diff() * 240
+                    log_df['est_vel'] = log_df['distance'].diff() * 240
                     log_df['est_vel'].loc[0] = 0    # initial velocity is 0
                     log_df['est_acc'] = log_df['est_vel'].diff() * 240
                     log_df['est_acc'].loc[0] = 0    # initial acceleration is 0

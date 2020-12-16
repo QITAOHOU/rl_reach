@@ -89,6 +89,12 @@ Example:
 python evaluate_policy.py --exp-id 99 --n-eval-steps 1000 --log-info 0 --plot-dim 0 --render 0
 ```
 
+If `--log-info` was enabled during evalution, it is possible to plot some useful information as shown in the plot below.
+```bash
+python scripts/plot_episode_eval_log.py --exp-id 99
+```
+
+
 Environment evaluation plot:
 
 ![Alt text](/docs/plot_episode_eval_log.png)

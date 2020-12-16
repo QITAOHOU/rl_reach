@@ -353,7 +353,7 @@ def get_saved_hyperparams(stats_path: str,
 def calc_ep_success(success_threshold, episode_success_list, infos):
     """update episode_success_list for the current timestep"""
 
-    if infos[0]['new_distance'] <= success_threshold:
+    if infos[0]['distance'] <= success_threshold:
         episode_success_list.append(1)
     else:
         episode_success_list.append(0)
