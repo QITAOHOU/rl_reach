@@ -13,28 +13,48 @@ The Gym environments and training scripts are adapted from [Replab](https://gith
 
 ## Installation
 
-1. Clone the repository
+### 1. Local installation
 
 ```bash
+# Clone the repository
 git clone https://github.com/PierreExeter/rl_reach.git && cd rl_reach/
-```
 
-2. Install and activate the Conda environment
-
-```bash
+# Install and activate the Conda environment
 conda env create -f environment.yml
 conda activate rl_reach
-```
-Note, this environment assumes that you have CUDA 11.1 installed. If you are using another version of CUDA, you will have to install Pytorch manually as indicated [here](https://pytorch.org/get-started/locally/).
 
-3. Install the custom Gym environments
-
-```bash
+# Install the custom Gym environments
 cd gym_envs/
 pip install -e .
 ```
 
-Alternatively, use the Docker container (see section below).
+Note, this Conda environment assumes that you have CUDA 11.1 installed. If you are using another version of CUDA, you will have to install Pytorch manually as indicated [here](https://pytorch.org/get-started/locally/).
+
+### 2. Docker install
+
+Pull the Docker image (CPU or GPU)
+
+```bash
+docker pull rlreach/rlreach-cpu:latest
+docker pull rlreach/rlreach-gpu:latest
+```
+
+or build image from Dockerfile
+
+```bash
+docker build -t rlreach/rlreach-cpu:latest . -f docker/Dockerfile_cpu
+docker build -t rlreach/rlreach-gpu:latest . -f docker/Dockerfile_gpu
+```
+
+Run commands inside the docker container with `run_docker_cpu.sh` and `run_docker_gpu.sh`.
+
+Example:
+```bash
+./docker/run_docker_cpu.sh python run_experiments.py --exp-id 99 --algo ppo --env widowx_reacher-v1 --n-timesteps 30000 --n-seeds 2
+./docker/run_docker_cpu.sh python evaluate_policy.py --exp-id 99 --n-eval-steps 1000 --log-info 0 --plot-dim 0 --render 0
+```
+
+Note, the GPU image requires [nvidia-docker](https://github.com/NVIDIA/nvidia-docker).
 
 ## Test the installation
 
@@ -89,11 +109,10 @@ Example:
 python evaluate_policy.py --exp-id 99 --n-eval-steps 1000 --log-info 0 --plot-dim 0 --render 0
 ```
 
-If `--log-info` was enabled during evalution, it is possible to plot some useful information as shown in the plot below.
+If `--log-info` was enabled during evaluation, it is possible to plot some useful information as shown in the plot below.
 ```bash
 python scripts/plot_episode_eval_log.py --exp-id 99
 ```
-
 
 Environment evaluation plot:
 
@@ -141,33 +160,6 @@ Optimise all experiments:
 ```bash
 ./opti_all.sh
 ```
-
-## Docker images
-
-Pull Docker image (CPU or GPU)
-
-```bash
-docker pull rlreach/rlreach-cpu
-docker pull rlreach/rlreach-gpu
-```
-
-or build image from Dockerfile
-
-```bash
-docker build -t rlreach-cpu:latest . -f docker/Dockerfile_cpu
-docker build -t rlreach-gpu:latest . -f docker/Dockerfile_gpu
-```
-
-Run commands inside the docker container with `run_docker_cpu.sh` and `run_docker_gpu.sh`.
-
-Example:
-```bash
-./docker/run_docker_cpu.sh python run_experiments.py --exp-id 99 --algo ppo --env widowx_reacher-v1 --n-timesteps 30000 --n-seeds 2
-./docker/run_docker_cpu.sh python evaluate_policy.py --exp-id 99 --n-eval-steps 1000 --log-info 0 --plot-dim 0 --render 0
-```
-
-Note, the GPU image requires [nvidia-docker](https://github.com/NVIDIA/nvidia-docker).
-
 
 ## Tested on
 

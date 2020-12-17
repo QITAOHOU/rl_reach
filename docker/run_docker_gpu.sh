@@ -14,6 +14,4 @@ else
   NVIDIA_ARG="--gpus all"
 fi
 
-docker run -it --rm --network host --ipc=host \
- --mount src=$(pwd),target=/root/rl_reach/,type=bind rlreach-gpu:latest \
-  bash -c "$cmd_line"
+docker run -it --rm --network host --ipc=host --mount src=$(pwd),target=/root/rl_reach/,type=bind rlreach/rlreach-gpu:latest bash -c "$cmd_line"
