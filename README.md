@@ -113,6 +113,7 @@ If `--log-info` was enabled during evaluation, it is possible to plot some usefu
 ```bash
 python scripts/plot_episode_eval_log.py --exp-id 99
 ```
+The plots are generated in the associated experiment folder, e.g. `logs/exp_99/ppo/`.
 
 Environment evaluation plot:
 
@@ -124,7 +125,7 @@ Experiment learning curves:
 
 ## Benchmark
 
-The evaluation metrics, environment's variables, hyperparameters used during the training and parameters for evaluating the environments are logged for each experiments in the file `benchmark/benchmark_results.csv`. Evaluation metrics of selected experiments ID can be plotted with the `script scripts/plot_benchmark.py`.
+The evaluation metrics, environment's variables, hyperparameters used during the training and parameters for evaluating the environments are logged for each experiments in the file `benchmark/benchmark_results.csv`. Evaluation metrics of selected experiments ID can be plotted with the `script scripts/plot_benchmark.py`. The plots are generated in the folder `benchmark/plots/`.
 
 Usage:
 - `--exp-list`: List of experiments to consider for plotting (list of int)

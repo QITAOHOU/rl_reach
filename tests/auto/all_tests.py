@@ -48,7 +48,7 @@ if os.path.isdir(log_folder):
 def test_train():
 
     args = [
-        "-n", 100000,
+        "-n", 1000,
         "--algo", "ppo",
         "--env", 'CartPole-v1',
         "-f", log_folder
@@ -68,7 +68,7 @@ def test_enjoy():
         "--algo", "ppo",
         "--env", 'CartPole-v1',
         "-f", log_folder,
-        "--render", 1
+        "--render", 0
     ]
 
     args = list(map(str, args))
